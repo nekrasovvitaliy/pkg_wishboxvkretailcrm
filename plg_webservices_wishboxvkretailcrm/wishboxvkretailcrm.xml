@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="webservices" method="upgrade">
+	<name>plg_webservices_wishboxvkretailcrm</name>
+	<author>Nekrasov Vitaliy</author>
+	<creationDate>October 2026</creationDate>
+	<authorEmail>nekrasov_vitaliy@list.ru</authorEmail>
+	<version>1.0.0</version>
+	<description>PLG_WEBSERVICES_WISHBOXVKRETAILCRM_XML_DESCRIPTION</description>
+	<namespace path="src">Joomla\Plugin\Webservices\WishboxVkRetailCrm</namespace>
+	<files>
+		<folder plugin="wishboxvkretailcrm">services</folder>
+		<folder>src</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_webservices_wishboxvkretailcrm.ini</language>
+		<language tag="en-GB">language/en-GB/plg_webservices_wishboxvkretailcrm.sys.ini</language>
+		<language tag="ru-RU">language/ru-RU/plg_webservices_wishboxvkretailcrm.ini</language>
+		<language tag="ru-RU">language/ru-RU/plg_webservices_wishboxvkretailcrm.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="vk" label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELDSET_VK_LABEL">
+				<field name="group_id" type="number"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_GROUP_ID_LABEL"
+					required="true"
+					min="1"
+					filter="integer"
+				/>
+				<field name="callback_secret" type="password"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_CALLBACK_SECRET_LABEL"
+					required="true"
+					filter="raw"
+				/>
+				<field name="confirmation_code" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_CONFIRMATION_CODE_LABEL"
+					required="true"
+					filter="raw"
+				/>
+				<field name="access_token" type="password"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_ACCESS_TOKEN_LABEL"
+					required="true"
+					filter="raw"
+				/>
+			</fieldset>
+			<fieldset name="retailcrm" label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELDSET_RETAILCRM_LABEL">
+				<field name="retailcrm_api_url" type="url"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_RETAILCRM_API_URL_LABEL"
+					required="true"
+					filter="raw"
+				/>
+				<field name="retailcrm_api_key" type="password"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_RETAILCRM_API_KEY_LABEL"
+					required="true"
+					filter="raw"
+				/>
+				<field name="retailcrm_site" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_RETAILCRM_SITE_LABEL"
+					required="true"
+					filter="cmd"
+				/>
+				<field name="vk_item_property" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_VK_ITEM_PROPERTY_LABEL"
+					default="vk_market_item_id"
+					required="true"
+					filter="cmd"
+				/>
+				<field name="retailcrm_price_type" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_RETAILCRM_PRICE_TYPE_LABEL"
+					default="base"
+					required="true"
+					filter="cmd"
+				/>
+				<field name="retailcrm_offer_lookup_limit" type="number"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_OFFER_LOOKUP_LIMIT_LABEL"
+					default="10000"
+					min="1"
+					max="100000"
+					filter="integer"
+				/>
+			</fieldset>
+			<fieldset name="orders" label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELDSET_ORDERS_LABEL">
+				<field name="order_import_limit" type="number"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_ORDER_IMPORT_LIMIT_LABEL"
+					default="10"
+					min="1"
+					max="100"
+					filter="integer"
+				/>
+				<field name="order_currency" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_ORDER_CURRENCY_LABEL"
+					default="RUB"
+					required="true"
+					filter="cmd"
+				/>
+				<field name="retailcrm_order_type" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_ORDER_TYPE_LABEL"
+					default="eshop-individual"
+					required="true"
+					filter="cmd"
+				/>
+				<field name="retailcrm_order_method" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_ORDER_METHOD_LABEL"
+					default="shopping-cart"
+					required="true"
+					filter="cmd"
+				/>
+				<field name="retailcrm_order_status" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_ORDER_STATUS_LABEL"
+					default="new"
+					required="true"
+					filter="cmd"
+				/>
+				<field name="retailcrm_marketplace_code" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_MARKETPLACE_CODE_LABEL"
+					filter="cmd"
+				/>
+				<field name="retailcrm_vk_order_field" type="text"
+					label="PLG_WEBSERVICES_WISHBOXVKRETAILCRM_FIELD_VK_ORDER_FIELD_LABEL"
+					filter="cmd"
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

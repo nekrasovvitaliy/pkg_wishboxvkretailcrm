@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="package" method="upgrade">
+	<name>pkg_wishboxvkretailcrm</name>
+	<packagename>wishboxvkretailcrm</packagename>
+	<author>Nekrasov Vitaliy</author>
+	<authorEmail>nekrasov_vitaliy@list.ru</authorEmail>
+	<creationDate>October 2026</creationDate>
+	<version>1.0.0</version>
+	<packager>Nekrasov Vitaliy</packager>
+	<description>PKG_WISHBOXVKRETAILCRM_XML_DESCRIPTION</description>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/pkg_wishboxvkretailcrm.sys.ini</language>
+		<language tag="ru-RU">ru-RU/pkg_wishboxvkretailcrm.sys.ini</language>
+	</languages>
+	<files>
+		<file type="library" id="wishboxvkretailcrm">lib_wishboxvkretailcrm.zip</file>
+		<file type="plugin" group="task" id="wishboxvkretailcrm">plg_task_wishboxvkretailcrm.zip</file>
+		<file type="plugin" group="webservices" id="wishboxvkretailcrm">plg_webservices_wishboxvkretailcrm.zip</file>
+	</files>
+</extension>

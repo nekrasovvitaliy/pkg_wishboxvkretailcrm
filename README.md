@@ -109,4 +109,3 @@ zip -r pkg_wishboxvkretailcrm.zip \
 ## Лицензия
 
 GNU General Public License version 2 или более поздняя версия.
-# pkg_wishboxvkretailcrm
