@@ -28,19 +28,37 @@
 					min="1"
 					filter="integer"
 				/>
-				<field name="access_token" type="password"
+				<field name="access_token" type="textarea"
 					label="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_ACCESS_TOKEN_LABEL"
 					required="true"
+					filter="raw"
+				/>
+				<field name="vk_api_url" type="url"
+					label="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_VK_API_URL_LABEL"
+					description="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_VK_API_URL_DESC"
+					default="https://api.vk.com/method/"
+					required="true"
+					filter="raw"
+				/>
+				<field name="vk_proxy_token" type="password"
+					label="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_VK_PROXY_TOKEN_LABEL"
+					description="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_VK_PROXY_TOKEN_DESC"
 					filter="raw"
 				/>
 			</fieldset>
 			<fieldset name="retailcrm" label="PLG_TASK_WISHBOXVKRETAILCRM_FIELDSET_RETAILCRM_LABEL">
 				<field name="retailcrm_api_url" type="url"
 					label="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_RETAILCRM_API_URL_LABEL"
+					description="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_RETAILCRM_API_URL_DESC"
 					required="true"
 					filter="raw"
 				/>
-				<field name="retailcrm_api_key" type="password"
+				<field name="retailcrm_proxy_token" type="password"
+					label="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_RETAILCRM_PROXY_TOKEN_LABEL"
+					description="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_RETAILCRM_PROXY_TOKEN_DESC"
+					filter="raw"
+				/>
+				<field name="retailcrm_api_key" type="textarea"
 					label="PLG_TASK_WISHBOXVKRETAILCRM_FIELD_RETAILCRM_API_KEY_LABEL"
 					required="true"
 					filter="raw"

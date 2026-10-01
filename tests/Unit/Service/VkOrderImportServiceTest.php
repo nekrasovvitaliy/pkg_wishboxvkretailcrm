@@ -15,11 +15,13 @@ use RetailCrm\Api\Model\Entity\Store\OfferPrice;
 use RetailCrm\Api\Model\Entity\Store\Product;
 use RetailCrm\Api\Model\Entity\Store\StoreOffer;
 use RetailCrm\Api\Model\Request\Orders\OrdersCreateRequest;
+use RetailCrm\Api\Model\Request\Orders\OrdersRequest;
 use RetailCrm\Api\Model\Response\Orders\OrdersCreateResponse;
 use RetailCrm\Api\Model\Response\Orders\OrdersResponse;
 use RetailCrm\Api\Model\Response\Store\OffersResponse;
 use RetailCrm\Api\ResourceGroup\Orders;
 use RetailCrm\Api\ResourceGroup\Store;
+use RuntimeException;
 use stdClass;
 use WishboxVkLibrary\Service\VkOrderService;
 use WishboxVkRetailCrmLibrary\Repositories\RetailCrmOfferRepository;
@@ -42,7 +44,16 @@ final class VkOrderImportServiceTest extends TestCase
 		$createResponse = new OrdersCreateResponse();
 		$createResponse->id = 501;
 		$orders = $this->createMock(Orders::class);
-		$orders->expects(self::once())->method('list')->willReturn($ordersResponse);
+		$orders->expects(self::once())
+			->method('list')
+			->with(
+				self::callback(
+					static fn(OrdersRequest $request): bool => $request->limit === 20
+						&& $request->page === 1
+						&& $request->filter->externalIds === ['VK-77']
+				)
+			)
+			->willReturn($ordersResponse);
 		$orders->expects(self::once())
 			->method('create')
 			->willReturnCallback(
@@ -87,6 +98,42 @@ final class VkOrderImportServiceTest extends TestCase
 		self::assertSame(1, $result->skipped);
 		self::assertSame(0, $result->failed);
 		self::assertSame(0, $vkOrderService->itemsRequestCount);
+	}
+
+	public function testReportsFailureWhenCreatingBuiltRetailCrmOrderFails(): void
+	{
+		$vkOrder = $this->createVkOrder();
+		$vkOrderItem = $this->createVkOrderItem();
+		$vkOrderService = new VkOrderService((object) ['items' => [$vkOrder]], [77 => [$vkOrderItem]]);
+		$store = $this->createStub(Store::class);
+		$store->method('offers')->willReturn($this->createOfferResponse());
+		$ordersResponse = new OrdersResponse();
+		$ordersResponse->orders = [];
+		$orders = $this->createMock(Orders::class);
+		$orders->expects(self::once())->method('list')->willReturn($ordersResponse);
+		$orders->expects(self::once())
+			->method('create')
+			->with(
+				self::callback(
+					static function (OrdersCreateRequest $request): bool {
+						self::assertSame('shop', $request->site);
+						self::assertSame('VK-77', $request->order->externalId);
+						self::assertSame('shop', $request->order->site);
+						self::assertSame(9001, $request->order->items[0]->offer->id);
+
+						return true;
+					}
+				)
+			)
+			->willThrowException(new RuntimeException('RetailCRM order creation failed.'));
+
+		$service = $this->createService($vkOrderService, $store, $orders);
+		$result = $service->importNewOrders();
+
+		self::assertSame(0, $result->created);
+		self::assertSame(1, $result->failed);
+		self::assertSame([], $result->orderIds);
+		self::assertSame('RetailCRM order creation failed.', $result->errors[77]);
 	}
 
 	private function createService(VkOrderService $vkOrderService, Store $store, Orders $orders): VkOrderImportService

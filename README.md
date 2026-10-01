@@ -86,6 +86,51 @@ POST /api/index.php/v1/wishboxvkretailcrm/callback
 
 Этот URL необходимо указать в настройках Callback API сообщества VK.
 
+## Прокси VK API
+
+Файл `vk-api-proxy.php` можно отдельно разместить на HTTPS-сервере, который
+имеет доступ к `https://api.vk.com/method/`. Перед публикацией обязательно
+укажите разрешённый IP приложения в `ALLOWED_CLIENT_IPS` либо задайте
+`PROXY_SHARED_SECRET`. Без одного из этих ограничений прокси откажется работать.
+
+VK API method передаётся после имени файла, например:
+
+```text
+POST https://proxy.example/vk-api-proxy.php/market.getGroupOrders
+```
+
+Адрес прокси указывается в поле «URL API VK» настроек task- и
+webservices-плагинов. Например:
+
+```text
+https://proxy.example/vk-api-proxy.php/
+```
+
+Если в `vk-api-proxy.php` задан `PROXY_SHARED_SECRET`, укажите такое же значение
+в поле «Токен прокси VK». Клиент передаст его в заголовке
+`X-VK-Proxy-Token`. Поле можно оставить пустым при авторизации прокси по IP.
+Прокси не хранит и не журналирует access token VK.
+
+## Прокси RetailCRM API
+
+Файл `retailcrm-api-proxy.php` размещается на HTTPS-сервере, имеющем доступ к
+RetailCRM. В файле укажите URL аккаунта без `/api/v5` и общий секрет:
+
+```php
+const RETAILCRM_UPSTREAM = 'https://your-account.retailcrm.ru';
+const PROXY_SHARED_SECRET = 'change-this-secret';
+```
+
+В поле «URL API RetailCRM» укажите URL файла без `/api/v5`:
+
+```text
+https://proxy.example/retailcrm-api-proxy.php
+```
+
+В поле «Токен прокси RetailCRM» укажите значение `PROXY_SHARED_SECRET`.
+RetailCRM SDK самостоятельно добавит к URL путь `/api/v5/...`, а интеграция
+передаст токен в заголовке `X-RetailCRM-Proxy-Token`.
+
 ## Сборка
 
 Из корня проекта:
@@ -97,6 +142,35 @@ ant
 Готовый установочный архив будет создан в корне проекта под именем
 `pkg_wishboxvkretailcrm.zip`. Промежуточные архивы расширений удаляются после
 сборки.
+
+## Integration-тест RetailCRM
+
+Обычная команда `composer test` использует только mocks и не выполняет сетевые
+запросы. Отдельный integration-тест подключается к настоящей RetailCRM и создаёт
+заказ с уникальным `externalId`. Скопируйте `.env.example` в `.env`, заполните
+параметры тестового аккаунта и явно разрешите запись:
+
+```bash
+cp .env.example .env
+```
+
+В `.env` установите `RETAILCRM_RUN_WRITE_TESTS=1`, затем выполните:
+
+```bash
+composer test:integration
+```
+
+Для работы через `retailcrm-api-proxy.php` укажите его URL в
+`RETAILCRM_API_URL` и заполните `RETAILCRM_PROXY_TOKEN`. Локальный `.env`
+исключён из Git. Созданный заказ тест не удаляет; он помечается комментарием
+`Created by the pkg_wishboxvkretailcrm integration test.`
+
+RetailCRM SDK требует сгенерированные сериализаторы моделей. Они создаются
+автоматически после `composer install` и `composer update`. Для ручного запуска:
+
+```bash
+composer retailcrm:generate-models
+```
 
 ## Тесты
 

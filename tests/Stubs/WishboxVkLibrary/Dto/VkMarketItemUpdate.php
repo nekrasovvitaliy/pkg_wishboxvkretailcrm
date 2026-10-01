@@ -4,7 +4,7 @@
  * @license     GNU General Public License version 2 or later;
  */
 
-namespace WishboxVkLibrary\Dto;
+namespace Tests\Stubs\WishboxVkLibrary\Dto;
 
 /**
  * Test substitute for the DTO supplied by the WishBox VK library.

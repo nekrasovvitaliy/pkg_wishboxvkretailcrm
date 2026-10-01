@@ -48,11 +48,59 @@ final readonly class RetailCrmOrderRepository
 	public function orderExists(string $externalId): bool
 	{
 		$request = new OrdersRequest();
-		$request->limit = 1;
+		$request->limit = 20;
 		$request->page = 1;
 		$request->filter = new OrderFilter();
 		$request->filter->externalIds = [$externalId];
-		$response = $this->retailCrmClient->orders->list($request);
+		try
+		{
+			$response = $this->retailCrmClient->orders->list($request);
+		}
+		catch (AccountDoesNotExistException $e)
+		{
+			$message = $e->getMessage();
+			$message = $e->getMessage();
+		}
+		catch (ApiErrorException $e)
+		{
+			$message = $e->getMessage();
+			$message = $e->getMessage();
+		}
+		catch (MissingCredentialsException $e)
+		{
+			$message = $e->getMessage();
+			$message = $e->getMessage();
+		}
+		catch (MissingParameterException $e)
+		{
+			$message = $e->getMessage();
+			$message = $e->getMessage();
+		}
+		catch (ValidationException $e)
+		{
+			$message = $e->getMessage();
+			$message = $e->getMessage();
+		}
+		catch (HandlerException $e)
+		{
+			$message = $e->getMessage();
+			$message = $e->getMessage();
+		}
+		catch (HttpClientException $e)
+		{
+			$message = $e->getMessage();
+			$message = $e->getMessage();
+		}
+		catch (ApiExceptionInterface $e)
+		{
+			$message = $e->getMessage();
+			$message = $e->getMessage();
+		}
+		catch (ClientExceptionInterface $e)
+		{
+			$message = $e->getMessage();
+			$message = $e->getMessage();
+		}
 
 		return is_array($response->orders ?? null) && $response->orders !== [];
 	}

@@ -4,7 +4,7 @@
  * @license     GNU General Public License version 2 or later;
  */
 
-namespace WishboxVkLibrary\Service;
+namespace Tests\Stubs\WishboxVkLibrary\Service;
 
 use stdClass;
 

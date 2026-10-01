@@ -9,7 +9,10 @@
     },
     "require-dev": {
         "joomla/registry": "^3.0",
-        "phpunit/phpunit": "^12.5"
+        "nyholm/psr7": "^1.8",
+        "php-http/curl-client": "^2.3",
+        "phpunit/phpunit": "^12.5",
+        "vlucas/phpdotenv": "^5.6"
     },
     "autoload": {
         "psr-4": {
@@ -18,8 +21,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "WishboxVkLibrary\\": "tests/Stubs/WishboxVkLibrary/"
+            "Tests\\": "tests/"
         }
     },
     "config": {
@@ -29,6 +31,14 @@
         }
     },
     "scripts": {
-        "test": "phpunit --configuration phpunit.xml.dist"
+        "test": "phpunit --configuration phpunit.xml.dist",
+        "test:integration": "phpunit --configuration phpunit.integration.xml.dist",
+        "retailcrm:generate-models": "@php -d error_reporting=24575 vendor/retailcrm/api-client-php/bin/retailcrm-client models:generate --all",
+        "post-install-cmd": [
+            "@retailcrm:generate-models"
+        ],
+        "post-update-cmd": [
+            "@retailcrm:generate-models"
+        ]
     }
 }
