@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pkg_wishboxvkretailcrm" default="make" basedir=".">
+	<property name="package" value="pkg_wishboxvkretailcrm.zip" />
+
+	<target name="make" description="Build the Joomla package.">
+		<delete quiet="yes">
+			<fileset dir=".">
+				<include name="${package}" />
+			</fileset>
+		</delete>
+
+		<zip destfile="lib_wishboxvkretailcrm.zip">
+			<fileset dir="./lib_wishboxvkretailcrm">
+				<include name="language/**" />
+				<include name="src/**" />
+				<include name="lib_wishboxvkretailcrm.xml" />
+			</fileset>
+		</zip>
+
+		<zip destfile="plg_task_wishboxvkretailcrm.zip">
+			<fileset dir="./plg_task_wishboxvkretailcrm">
+				<include name="forms/**" />
+				<include name="language/**" />
+				<include name="services/**" />
+				<include name="src/**" />
+				<include name="script.php" />
+				<include name="wishboxvkretailcrm.xml" />
+			</fileset>
+		</zip>
+
+		<zip destfile="plg_webservices_wishboxvkretailcrm.zip">
+			<fileset dir="./plg_webservices_wishboxvkretailcrm">
+				<include name="language/**" />
+				<include name="services/**" />
+				<include name="src/**" />
+				<include name="script.php" />
+				<include name="wishboxvkretailcrm.xml" />
+			</fileset>
+		</zip>
+
+		<zip destfile="${package}">
+			<fileset dir=".">
+				<include name="lib_wishboxvkretailcrm.zip" />
+				<include name="plg_task_wishboxvkretailcrm.zip" />
+				<include name="plg_webservices_wishboxvkretailcrm.zip" />
+				<include name="language/**" />
+				<include name="script.php" />
+				<include name="pkg_wishboxvkretailcrm.xml" />
+			</fileset>
+		</zip>
+
+		<delete quiet="yes">
+			<fileset dir=".">
+				<include name="lib_wishboxvkretailcrm.zip" />
+				<include name="plg_task_wishboxvkretailcrm.zip" />
+				<include name="plg_webservices_wishboxvkretailcrm.zip" />
+			</fileset>
+		</delete>
+	</target>
+</project>

@@ -127,7 +127,7 @@ final class RetailCrmOfferRepository
 	public function getOffersByVkItemIds(array $vkItemIds, int $maxOffers): array
 	{
 		$wantedIds = array_map('intval', $vkItemIds)
-				|> (fn($x) => array_filter($x, static fn(int $vkItemId): bool => $vkItemId > 0))
+				|> (fn($x) => array_filter($x, static fn (int $vkItemId): bool => $vkItemId > 0))
 				|> array_unique(...)
 				|> array_values(...)
 				|> (fn($x) => array_fill_keys($x, true));

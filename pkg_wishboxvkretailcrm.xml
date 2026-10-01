@@ -8,6 +8,7 @@
 	<version>1.0.0</version>
 	<packager>Nekrasov Vitaliy</packager>
 	<description>PKG_WISHBOXVKRETAILCRM_XML_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/pkg_wishboxvkretailcrm.sys.ini</language>
 		<language tag="ru-RU">ru-RU/pkg_wishboxvkretailcrm.sys.ini</language>

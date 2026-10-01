@@ -9,7 +9,7 @@ Joomla-пакет для двусторонней интеграции VK Мар
 
 ## Зависимости
 
-- PHP 8.1 или новее;
+- PHP 8.5 или новее;
 - Joomla с компонентом Scheduler;
 - установленный пакет `pkg_wishboxvk` и библиотека `WishboxVkLibrary`;
 - официальный PHP SDK `retailcrm/api-client-php` версии 6.15 или новее.
@@ -67,6 +67,9 @@ pkg_wishboxvkretailcrm/
 ├── plg_task_wishboxvkretailcrm/     # задачи Joomla Scheduler
 ├── plg_webservices_wishboxvkretailcrm/ # endpoint VK Callback API
 ├── language/
+├── tests/                             # PHPUnit-тесты без сетевых запросов
+├── build.xml                         # сборка пакета через Apache Ant
+├── script.php                        # проверка версий Joomla и PHP
 └── pkg_wishboxvkretailcrm.xml
 ```
 
@@ -88,20 +91,21 @@ POST /api/index.php/v1/wishboxvkretailcrm/callback
 Из корня проекта:
 
 ```bash
-cd lib_wishboxvkretailcrm
-zip -r ../lib_wishboxvkretailcrm.zip . -x '.DS_Store'
-cd ../plg_task_wishboxvkretailcrm
-zip -r ../plg_task_wishboxvkretailcrm.zip . -x '.DS_Store'
-cd ../plg_webservices_wishboxvkretailcrm
-zip -r ../plg_webservices_wishboxvkretailcrm.zip . -x '.DS_Store'
-cd ..
-zip -r pkg_wishboxvkretailcrm.zip \
-	pkg_wishboxvkretailcrm.xml \
-	language \
-	lib_wishboxvkretailcrm.zip \
-	plg_task_wishboxvkretailcrm.zip \
-	plg_webservices_wishboxvkretailcrm.zip \
-	-x '.DS_Store'
+ant
+```
+
+Готовый установочный архив будет создан в корне проекта под именем
+`pkg_wishboxvkretailcrm.zip`. Промежуточные архивы расширений удаляются после
+сборки.
+
+## Тесты
+
+Тесты используют PHPUnit 12.5 и PHP 8.5. VK и RetailCRM заменяются тестовыми
+ответами, поэтому реальные API-запросы не выполняются.
+
+```bash
+composer install
+composer test
 ```
 
 Сначала установите `pkg_wishboxvk`, затем `pkg_wishboxvkretailcrm`.

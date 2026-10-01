@@ -7,6 +7,7 @@
 	<version>1.0.0</version>
 	<description>PLG_WEBSERVICES_WISHBOXVKRETAILCRM_XML_DESCRIPTION</description>
 	<namespace path="src">Joomla\Plugin\Webservices\WishboxVkRetailCrm</namespace>
+	<scriptfile>script.php</scriptfile>
 	<files>
 		<folder plugin="wishboxvkretailcrm">services</folder>
 		<folder>src</folder>

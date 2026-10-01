@@ -4,12 +4,31 @@
     "type": "project",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.5",
         "retailcrm/api-client-php": "^6.15"
+    },
+    "require-dev": {
+        "joomla/registry": "^3.0",
+        "phpunit/phpunit": "^12.5"
     },
     "autoload": {
         "psr-4": {
             "WishboxVkRetailCrmLibrary\\": "lib_wishboxvkretailcrm/src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "WishboxVkLibrary\\": "tests/Stubs/WishboxVkLibrary/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "civicrm/composer-compile-plugin": false,
+            "php-http/discovery": false
+        }
+    },
+    "scripts": {
+        "test": "phpunit --configuration phpunit.xml.dist"
     }
 }
